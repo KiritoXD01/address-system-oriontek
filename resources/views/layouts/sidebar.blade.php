@@ -15,6 +15,14 @@
 
     <!-- Nav Item - Users -->
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('business.index') }}">
+            <i class="fas fa-fw fa-building"></i>
+            <span>Business</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Users -->
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('user.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Users</span>

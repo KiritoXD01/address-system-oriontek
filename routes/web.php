@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BusinessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,10 @@ Route::prefix('user')->name('user.')->middleware(['auth'])->group(function(){
     Route::post('/', [UserController::class, 'store'])->name('store');
     Route::patch('/{user}', [UserController::class, 'update'])->name('update');
     Route::delete('/{user}', [UserController::class, 'delete'])->name('delete');
+});
+
+Route::prefix('business')->name('business.')->middleware(['auth'])->group(function(){
+    Route::get('/', [BusinessController::class, 'index'])->name('index');
 });
 
 require __DIR__.'/auth.php';
