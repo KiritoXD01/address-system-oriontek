@@ -47,11 +47,18 @@
                                 @endif
                             </td>
                             <td style="width: 10%;">
-                                <div class="btn-group btn-block">
-                                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">
-                                        <i class="fa fa-fw fa-edit"></i> Edit
-                                    </a>
-                                </div>
+                                <form action="{{ route('user.delete', $user->id) }}" method="post" id="formDelete-{{ $user->id }}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <div class="btn-group btn-block">
+                                        <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">
+                                            <i class="fa fa-fw fa-edit"></i> Edit
+                                        </a>
+                                        <button type="button" class="btn btn-danger" onclick="deleteItem({{ $user->id }})">
+                                            <i class="fa fa-trash fa-fw"></i> Delete
+                                        </button>
+                                    </div>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -65,6 +72,33 @@
 
 @section('javascript')
     <script>
+        function deleteItem(id) {
+            Swal.fire({
+                title: "@lang('messages.disableItem')",
+                icon: 'question',
+                showCancelButton: true,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                confirmButtonText: "@lang('messages.yes')",
+                cancelButtonText: "No",
+                reverseButtons: true
+            })
+            .then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        title: "@lang('messages.pleaseWait')",
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onOpen: () => {
+                            Swal.showLoading();
+                            document.getElementById(`formDelete-${id}`).submit();
+                        }
+                    });
+                }
+            });
+        }
+
         $(document).ready(function(){
             $("#datatable").dataTable({
                 "order": [[ 0, "asc" ]]

@@ -58,4 +58,10 @@ class UserController extends Controller
 
         return redirect()->route('user.edit', $user->id)->with('success', trans('messages.itemUpdated'));
     }
+
+    public function delete(User $user)
+    {
+        $user->delete();
+        return redirect()->route('user.index')->with('success', trans('messages.ItemDeleted'));
+    }
 }
