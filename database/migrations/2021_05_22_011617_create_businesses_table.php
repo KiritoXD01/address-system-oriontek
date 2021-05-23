@@ -16,7 +16,9 @@ class CreateBusinessesTable extends Migration
         Schema::create('businesses', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
+            $table->string('phone', 20)->nullable();
             $table->string('logo', 500)->nullable();
+            $table->string('email', 255)->nullable();
             $table->timestamps();
         });
     }

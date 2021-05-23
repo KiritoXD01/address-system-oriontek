@@ -18,7 +18,7 @@ class CreateClientsTable extends Migration
             $table->string('name', 255);
             $table->string('phone', 20)->nullable();
             $table->string('logo', 500)->nullable();
-            $table->enum('status', ['active', 'disabled'])->default('active');
+            $table->string('email', 255)->nullable();
             $table->timestamps();
         });
     }

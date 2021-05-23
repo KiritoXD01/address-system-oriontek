@@ -30,6 +30,8 @@ Route::prefix('user')->name('user.')->middleware(['auth'])->group(function(){
 
 Route::prefix('business')->name('business.')->middleware(['auth'])->group(function(){
     Route::get('/', [BusinessController::class, 'index'])->name('index');
+    Route::post('/', [BusinessController::class, 'store'])->name('store');
+    Route::patch('/{business}', [BusinessController::class, 'update'])->name('update');
 });
 
 require __DIR__.'/auth.php';
