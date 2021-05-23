@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ClientAddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Route::prefix('client')->name('client.')->middleware(['auth'])->group(function()
     Route::post('/', [ClientController::class, 'store'])->name('store');
     Route::patch('/{client}', [ClientController::class, 'update'])->name('update');
     Route::delete('/{client}', [ClientController::class, 'delete'])->name('delete');
+});
+
+Route::prefix('clientAddress')->name('clientAddress.')->middleware(['auth'])->group(function(){
+    //Route::get('/{client}/create')
 });
 
 require __DIR__.'/auth.php';

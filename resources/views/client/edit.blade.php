@@ -84,6 +84,66 @@
             </div>
         </div>
     </form>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary float-right">
+                        <i class="fa fa-fw fa-save"></i> @lang('messages.save') @lang('messages.client')
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="list-group">
+                        @foreach ($errors->all() as $error)
+                            <li class="list-group-item">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if(session('success'))
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('success') }}</strong>
+                </div>
+            @endif
+            <div class="table-responsive">
+                <table class="table table-hover" id="datatable" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>@lang('messages.name')</th>
+                        <td>@lang('messages.actions')</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($client->addresses as $address)
+                        <tr class="text-center">
+                            <td>{{ $address->address }}</td>
+                            <td style="width: 10%;">
+                                <form action="{{ route('client.delete', $client->id) }}" method="post" id="formDelete-{{ $client->id }}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <div class="btn-group btn-block">
+                                        <a href="{{ route('client.edit', $client->id) }}" class="btn btn-primary">
+                                            <i class="fa fa-fw fa-edit"></i> Edit
+                                        </a>
+                                        <button type="button" class="btn btn-danger" onclick="deleteItem({{ $client->id }})">
+                                            <i class="fa fa-trash fa-fw"></i> Delete
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('javascript')

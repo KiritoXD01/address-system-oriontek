@@ -21,6 +21,7 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     {
+        $client->load('addresses');
         return view('client.edit', compact('client'));
     }
 
