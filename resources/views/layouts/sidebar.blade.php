@@ -1,7 +1,11 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <img alt="" src="{{ asset('img/logo.png') }}" style="width: 80%;" class="mx-auto my-3" />
+    @if(!empty(App\Models\Business::first()->logo))
+        <img alt="" src="{{ App\Models\Business::first()->logo }}" style="width: 80%;" class="mx-auto my-3" />
+    @else
+        <img alt="" src="{{ asset('img/logo.jpeg') }}" style="width: 80%;" class="mx-auto my-3" />
+    @endif
     <!-- Divider -->
     <hr class="sidebar-divider my-3">
 
@@ -17,7 +21,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('business.index') }}">
             <i class="fas fa-fw fa-building"></i>
-            <span>Business</span>
+            <span>@lang('messages.business')</span>
         </a>
     </li>
 
@@ -25,7 +29,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user.index') }}">
             <i class="fas fa-fw fa-users"></i>
-            <span>Users</span>
+            <span>@lang('messages.users')</span>
         </a>
     </li>
 
@@ -33,7 +37,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('client.index') }}">
             <i class="fas fa-fw fa-users"></i>
-            <span>Client</span>
+            <span>@lang('messages.clients')</span>
         </a>
     </li>
 

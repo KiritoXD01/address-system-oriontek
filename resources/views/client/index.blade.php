@@ -30,7 +30,7 @@
                     <tr>
                         <th>@lang('messages.name')</th>
                         <th>Email</th>
-                        <th>@lang('messages.status')</th>
+                        <th>@lang('messages.created_at')</th>
                         <td>@lang('messages.actions')</td>
                     </tr>
                     </thead>
@@ -39,23 +39,17 @@
                         <tr class="text-center">
                             <td>{{ $client->name }}</td>
                             <td>{{ $client->email }}</td>
-                            <td>
-                                @if($client->status)
-                                    <span class="badge badge-primary">@lang('messages.enabled')</span>
-                                @else
-                                    <span class="badge badge-danger">@lang('messages.disabled')</span>
-                                @endif
-                            </td>
-                            <td style="width: 10%;">
+                            <td>{{ $client->created_at }}</td>
+                            <td style="width: 20%;">
                                 <form action="{{ route('client.delete', $client->id) }}" method="post" id="formDelete-{{ $client->id }}">
                                     @method('DELETE')
                                     @csrf
                                     <div class="btn-group btn-block">
                                         <a href="{{ route('client.edit', $client->id) }}" class="btn btn-primary">
-                                            <i class="fa fa-fw fa-edit"></i> Edit
+                                            <i class="fa fa-fw fa-edit"></i> @lang('messages.edit')
                                         </a>
                                         <button type="button" class="btn btn-danger" onclick="deleteItem({{ $client->id }})">
-                                            <i class="fa fa-trash fa-fw"></i> Delete
+                                            <i class="fa fa-trash fa-fw"></i> @lang('messages.delete')
                                         </button>
                                     </div>
                                 </form>
@@ -74,7 +68,7 @@
     <script>
         function deleteItem(id) {
             Swal.fire({
-                title: "@lang('messages.disableItem')",
+                title: "@lang('messages.deleteItem')",
                 icon: 'question',
                 showCancelButton: true,
                 allowEscapeKey: false,

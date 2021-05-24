@@ -46,7 +46,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
         <div id="content">
-        @include('layouts.header')
+        @include('layouts.header', ['user' => auth()->user()])
         <!-- Begin Page Content -->
             <div class="container-fluid">
                 @yield('content')

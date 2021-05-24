@@ -20,6 +20,10 @@ use App\Http\Controllers\ClientAddressController;
 
 Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('home');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/changeLanguage/{language}', function(string $language){
+    session(['locale' => $language]);
+    return redirect()->back();
+})->name("changeLanguage");
 
 Route::prefix('user')->name('user.')->middleware(['auth'])->group(function(){
     Route::get('/', [UserController::class, 'index'])->name('index');
@@ -46,7 +50,11 @@ Route::prefix('client')->name('client.')->middleware(['auth'])->group(function()
 });
 
 Route::prefix('clientAddress')->name('clientAddress.')->middleware(['auth'])->group(function(){
-    //Route::get('/{client}/create')
+    Route::get('/{client}/create', [ClientAddressController::class, 'create'])->name('create');
+    Route::get('/{clientAddress}/edit', [ClientAddressController::class, 'edit'])->name("edit");
+    Route::post('/', [ClientAddressController::class, 'store'])->name('store');
+    Route::patch('/{clientAddress}', [ClientAddressController::class, 'update'])->name('update');
+    Route::delete('/{clientAddress}', [ClientAddressController::class, 'delete'])->name('delete');
 });
 
 require __DIR__.'/auth.php';

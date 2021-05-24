@@ -23,7 +23,7 @@
     <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
     <style>
         .backgroundImg {
-            background-image: url("{{ asset('img/logo.png') }}");
+            background-image: url("{{ asset('img/logo.jpeg') }}");
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;

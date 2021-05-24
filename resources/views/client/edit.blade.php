@@ -89,9 +89,9 @@
         <div class="card-header py-3">
             <div class="row">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary float-right">
-                        <i class="fa fa-fw fa-save"></i> @lang('messages.save') @lang('messages.client')
-                    </button>
+                    <a href="{{ route('clientAddress.create', $client->id) }}" class="btn btn-primary float-right">
+                        <i class="fa fa-fw fa-plus-circle"></i> @lang('messages.create') @lang('messages.address')
+                    </a>
                 </div>
             </div>
         </div>
@@ -114,25 +114,25 @@
             <div class="table-responsive">
                 <table class="table table-hover" id="datatable" style="width: 100%;">
                     <thead>
-                    <tr>
-                        <th>@lang('messages.name')</th>
-                        <td>@lang('messages.actions')</td>
-                    </tr>
+                        <tr>
+                            <th>@lang('messages.name')</th>
+                            <th>@lang('messages.actions')</th>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($client->addresses as $address)
                         <tr class="text-center">
                             <td>{{ $address->address }}</td>
-                            <td style="width: 10%;">
-                                <form action="{{ route('client.delete', $client->id) }}" method="post" id="formDelete-{{ $client->id }}">
+                            <td style="width: 20%;">
+                                <form action="{{ route('clientAddress.delete', $address->id) }}" method="post" id="formDelete-{{ $address->id }}">
                                     @method('DELETE')
                                     @csrf
                                     <div class="btn-group btn-block">
-                                        <a href="{{ route('client.edit', $client->id) }}" class="btn btn-primary">
-                                            <i class="fa fa-fw fa-edit"></i> Edit
+                                        <a href="{{ route('clientAddress.edit', $address->id) }}" class="btn btn-primary">
+                                            <i class="fa fa-fw fa-edit"></i> @lang('messages.edit')
                                         </a>
-                                        <button type="button" class="btn btn-danger" onclick="deleteItem({{ $client->id }})">
-                                            <i class="fa fa-trash fa-fw"></i> Delete
+                                        <button type="button" class="btn btn-danger" onclick="deleteItem({{ $address->id }})">
+                                            <i class="fa fa-trash fa-fw"></i> @lang('messages.delete')
                                         </button>
                                     </div>
                                 </form>
@@ -148,6 +148,33 @@
 
 @section('javascript')
     <script>
+        function deleteItem(id) {
+            Swal.fire({
+                title: "@lang('messages.deleteItem')",
+                icon: 'question',
+                showCancelButton: true,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                confirmButtonText: "@lang('messages.yes')",
+                cancelButtonText: "No",
+                reverseButtons: true
+            })
+                .then((result) => {
+                    if (result.value) {
+                        Swal.fire({
+                            title: "@lang('messages.pleaseWait')",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            onOpen: () => {
+                                Swal.showLoading();
+                                document.getElementById(`formDelete-${id}`).submit();
+                            }
+                        });
+                    }
+                });
+        }
+
         $(document).ready(function(){
             $("#form").submit(function() {
                 Swal.fire({

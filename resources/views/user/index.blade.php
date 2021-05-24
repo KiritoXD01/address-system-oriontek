@@ -27,12 +27,12 @@
             <div class="table-responsive">
                 <table class="table table-hover" id="datatable" style="width: 100%;">
                     <thead>
-                    <tr>
-                        <th>@lang('messages.name')</th>
-                        <th>Email</th>
-                        <th>@lang('messages.status')</th>
-                        <td>@lang('messages.actions')</td>
-                    </tr>
+                        <tr>
+                            <th>@lang('messages.name')</th>
+                            <th>Email</th>
+                            <th>@lang('messages.status')</th>
+                            <td>@lang('messages.actions')</td>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($users as $user)
@@ -46,17 +46,19 @@
                                     <span class="badge badge-danger">@lang('messages.disabled')</span>
                                 @endif
                             </td>
-                            <td style="width: 10%;">
+                            <td style="width: 20%;">
                                 <form action="{{ route('user.delete', $user->id) }}" method="post" id="formDelete-{{ $user->id }}">
                                     @method('DELETE')
                                     @csrf
                                     <div class="btn-group btn-block">
                                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">
-                                            <i class="fa fa-fw fa-edit"></i> Edit
+                                            <i class="fa fa-fw fa-edit"></i> @lang('messages.edit')
                                         </a>
-                                        <button type="button" class="btn btn-danger" onclick="deleteItem({{ $user->id }})">
-                                            <i class="fa fa-trash fa-fw"></i> Delete
-                                        </button>
+                                        @if(auth()->user()->id != $user->id)
+                                            <button type="button" class="btn btn-danger" onclick="deleteItem({{ $user->id }})">
+                                                <i class="fa fa-trash fa-fw"></i> @lang('messages.delete')
+                                            </button>
+                                        @endif
                                     </div>
                                 </form>
                             </td>
@@ -74,7 +76,7 @@
     <script>
         function deleteItem(id) {
             Swal.fire({
-                title: "@lang('messages.disableItem')",
+                title: "@lang('messages.deleteItem')",
                 icon: 'question',
                 showCancelButton: true,
                 allowEscapeKey: false,
