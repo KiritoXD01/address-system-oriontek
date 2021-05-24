@@ -91,7 +91,7 @@
     </div>
     <!-- The Modal -->
     <div class="modal fade" id="modalForgotPassword">
-        <form action="" method="POST" autocomplete="off">
+        <form action="{{ route('forgot.password') }}" method="POST" autocomplete="off">
             @csrf
             <div class="modal-dialog">
                 <div class="modal-content">

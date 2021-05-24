@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientAddressController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,21 @@ use App\Http\Controllers\ClientAddressController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+    ->middleware('guest')
+    ->name('login');
+
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware('guest');
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgotPassword'])->name('forgot.password');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPassword'])->name('reset.password.show');
+Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.submit');
 
 Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('home');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
@@ -56,5 +73,3 @@ Route::prefix('clientAddress')->name('clientAddress.')->middleware(['auth'])->gr
     Route::patch('/{clientAddress}', [ClientAddressController::class, 'update'])->name('update');
     Route::delete('/{clientAddress}', [ClientAddressController::class, 'delete'])->name('delete');
 });
-
-require __DIR__.'/auth.php';
